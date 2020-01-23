@@ -9,6 +9,17 @@ import string
 # string.ascii_letters is ascii_lowercase + ascii_uppercase
 # string.printable is digits + ascii_letters + punctuation + whitespace
 
+# convert a character number or letter to a number
+def numberOf(number):
+    """Find the numerical equivalent of a given alphanumeric character
+    number: str -- string representation of a number in some base 2-36
+    return: int -- integer representation of the number in decimal"""
+    assert number in string.digits or number in string.ascii_letters, 'character {} is not a number'.format(number)
+    if number in string.ascii_letters:
+        return string.ascii_letters.index(number) % 26 + 10
+    else:
+        return int(number)
+
 
 def decode(digits, base):
     """Decode given digits in given base to number in base 10.
@@ -17,13 +28,18 @@ def decode(digits, base):
     return: int -- integer representation of number (in base 10)"""
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
-    # TODO: Decode digits from binary (base 2)
-    # ...
-    # TODO: Decode digits from hexadecimal (base 16)
-    # ...
-    # TODO: Decode digits from any base (2 up to 36)
-    # ...
-
+    # PSEUDO:
+    #   loop through digits backwards, count starting from 0
+    #       find number equivalent of digit
+    #       multiply number by base ^ count
+    #       add to sum
+    #   return sum
+    sum = 0
+    for pos, digit in enumerate(digits[::-1]):
+        number = numberOf(digit)
+        number *= (base ** pos)
+        sum += number
+    return sum
 
 def encode(number, base):
     """Encode given number in base 10 to digits in given base.
@@ -78,4 +94,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # main()
+    print(decode('a', 16))
