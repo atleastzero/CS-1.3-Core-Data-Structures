@@ -91,6 +91,8 @@ def convert(digits, base1, base2):
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base1 <= 36, 'base1 is out of range: {}'.format(base1)
     assert 2 <= base2 <= 36, 'base2 is out of range: {}'.format(base2)
+    inDecimal = decode(digits, base1)
+    return encode(inDecimal, base2)
 
 def main():
     """Read command-line arguments and convert given digits between bases."""
@@ -107,7 +109,5 @@ def main():
         print('Usage: {} digits base1 base2'.format(sys.argv[0]))
         print('Converts digits from base1 to base2')
 
-
 if __name__ == '__main__':
-    # main()
-    print(encode(6, 2))
+    main()
