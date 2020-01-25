@@ -33,17 +33,18 @@ def decode(digits, base):
     return: int -- integer representation of number (in base 10)"""
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
-    # PSEUDO:
-    #   loop through digits backwards, count starting from 0
-    #       find number equivalent of digit
-    #       multiply number by base ^ count
-    #       add to sum
-    #   return sum
+
     sum = 0
-    for pos, digit in enumerate(digits[::-1]):
+    whole, fraction = digits.split(".", 1)
+    for pos, digit in enumerate(whole[::-1]):
         number = numberOf(digit)
         number *= (base ** pos)
         sum += number
+    for pos, digit in enumerate(fraction):
+        number = numberOf(digit)
+        number *= (base ** (-1 * (pos + 1)))
+        sum += number
+
     return sum
 
 def encode(number, base):
@@ -110,4 +111,5 @@ def main():
         print('Converts digits from base1 to base2')
 
 if __name__ == '__main__':
-    main()
+    # main()
+    print(decodeWithRadix("1101.101", 2))
