@@ -86,10 +86,11 @@ def encode(number, base):
     result += "."
 
     digits = 0
-    while numLeft > 0 and digits <= 5:
+    while numLeft > 0 and digits < 5:
+
         whole = int(numLeft * base)
         result += numberTo(whole, base)
-        numLeft -= whole
+        numLeft = numLeft * base - whole
         digits += 1
 
     return result
@@ -122,4 +123,5 @@ def main():
         print('Converts digits from base1 to base2')
 
 if __name__ == '__main__':
-    main()
+    # main()
+    print(encode(1.578125, 2))
