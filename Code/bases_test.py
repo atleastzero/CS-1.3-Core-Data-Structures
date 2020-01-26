@@ -1,6 +1,6 @@
 #!python
 
-from bases import decode, encode, convert
+from bases import decode, encode, convert, encodeTwosComplement
 import unittest
 
 
@@ -357,6 +357,27 @@ class BasesConvertTest(unittest.TestCase):
         assert convert('1110101001100010', 2, 16) == 'ea62'
         assert convert('1111101101110011', 2, 16) == 'fb73'
 
+
+class BasesTwosComplementTest(unittest.TestCase):
+    def test_twoscomplement_positive_four_bit(self):
+        assert encodeTwosComplement(1, 4) == "0001"
+        assert encodeTwosComplement(2, 4) == "0010"
+        assert encodeTwosComplement(3, 4) == "0011"
+        assert encodeTwosComplement(4, 4) == "0100"
+        assert encodeTwosComplement(5, 4) == "0101"
+        assert encodeTwosComplement(6, 4) == "0110"
+        assert encodeTwosComplement(7, 4) == "0111"
+        assert encodeTwosComplement(0, 4) == "0000"
+
+    def test_twoscomplement_negative_four_bit(self):
+        assert encodeTwosComplement(-1, 4) == "1111"
+        assert encodeTwosComplement(-2, 4) == "1110"
+        assert encodeTwosComplement(-3, 4) == "1101"
+        assert encodeTwosComplement(-4, 4) == "1100"
+        assert encodeTwosComplement(-5, 4) == "1011"
+        assert encodeTwosComplement(-6, 4) == "1010"
+        assert encodeTwosComplement(-7, 4) == "1001"
+        assert encodeTwosComplement(-8, 4) == "1000"
 
 if __name__ == '__main__':
     unittest.main()
