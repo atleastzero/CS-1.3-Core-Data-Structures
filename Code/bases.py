@@ -34,7 +34,7 @@ def decode(digits, base):
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
 
-    sum = 0
+    total = 0
     if "." in digits:
         whole, fraction = digits.split(".", 1)
     else:
@@ -43,13 +43,13 @@ def decode(digits, base):
     for pos, digit in enumerate(whole[::-1]):
         number = numberOf(digit)
         number *= (base ** pos)
-        sum += number
+        total += number
     for pos, digit in enumerate(fraction):
         number = numberOf(digit)
         number *= (base ** (-1 * (pos + 1)))
-        sum += number
+        total += number
 
-    return sum
+    return total
 
 def encode(number, base):
     """Encode given number in base 10 to digits in given base.
@@ -83,7 +83,8 @@ def encode(number, base):
     if result == "":
         result = "0"
 
-    result += "."
+    if numLeft > 0:
+        result += "."
 
     digits = 0
     while numLeft > 0 and digits < 5:
@@ -107,6 +108,42 @@ def convert(digits, base1, base2):
     inDecimal = decode(digits, base1)
     return encode(inDecimal, base2)
 
+def encodeTwosComplement(number, bits):
+    negative = False
+    absoluteValue = number
+    if number < 0:
+        negative = True
+        absoluteValue = -1 * number
+
+    binary = encode(absoluteValue, 2)
+
+    length = len(binary)
+    for _ in range(bits - length):
+        binary = "0" + binary
+
+    if not negative:
+        return binary
+
+
+    onesComplement = ""
+    for digit in binary:
+        if digit == "1":
+            onesComplement += "0"
+        else:
+            onesComplement += "1"
+
+    return addOneBinary(onesComplement)
+
+def addOneBinary(digits):
+    result = ""
+    for digit in digits[::-1]:
+        if digit == "0":
+            result = '1' + result
+            return digits[:len(digits) - len(result)] + result
+        else:
+            result = '0' + result
+    return result
+
 def main():
     """Read command-line arguments and convert given digits between bases."""
     import sys
@@ -124,4 +161,5 @@ def main():
 
 if __name__ == '__main__':
     # main()
-    print(encode(1.578125, 2))
+    print(encodeTwosComplement(10, 8))
+    print(encodeTwosComplement(-10, 8))
