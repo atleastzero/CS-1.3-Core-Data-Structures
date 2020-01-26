@@ -49,7 +49,7 @@ def decode(digits, base):
         number *= (base ** (-1 * (pos + 1)))
         total += number
 
-    return total
+    return round(total, 5) 
 
 def encode(number, base):
     """Encode given number in base 10 to digits in given base.
@@ -60,6 +60,12 @@ def encode(number, base):
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
     # Handle unsigned numbers only for now
     assert number >= 0, 'number is negative: {}'.format(number)
+
+    if base == 10:
+        if number % 1 == 0:
+            return str(int(number))
+        else:
+            return str(round(number, 5))
 
     numLeft = number
     oldPos = 1
@@ -88,7 +94,6 @@ def encode(number, base):
 
     digits = 0
     while numLeft > 0 and digits < 5:
-
         whole = int(numLeft * base)
         result += numberTo(whole, base)
         numLeft = numLeft * base - whole
@@ -161,5 +166,4 @@ def main():
 
 if __name__ == '__main__':
     # main()
-    print(encodeTwosComplement(10, 8))
-    print(encodeTwosComplement(-10, 8))
+    print(encode(123.4, 5))

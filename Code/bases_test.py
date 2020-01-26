@@ -23,6 +23,9 @@ class BasesDecodeTest(unittest.TestCase):
         assert decode('1101', 2) == 13
         assert decode('1110', 2) == 14
         assert decode('1111', 2) == 15
+        assert decode('1.101', 2) == 1.625
+        assert decode('10.0', 2) == 2
+        assert decode('0.10101', 2) == 0.65625
 
     def test_decode_decimal(self):
         assert decode('5', 10) == 5
@@ -37,6 +40,13 @@ class BasesDecodeTest(unittest.TestCase):
         assert decode('6789', 10) == 6789
         assert decode('13579', 10) == 13579
         assert decode('24680', 10) == 24680
+        assert decode('23.45', 10) == 23.45
+        assert decode('678.9', 10) == 678.9
+        assert decode('0.13579', 10) == .13579
+        assert decode('2468.0', 10) == 2468.0
+        assert decode('25.00', 10) == 25
+        assert decode('0.64', 10) == .64
+        assert decode('9.9', 10) == 9.9
 
     def test_decode_hexadecimal(self):
         assert decode('a', 16) == 10
@@ -51,6 +61,10 @@ class BasesDecodeTest(unittest.TestCase):
         assert decode('facade', 16) == 16435934
         assert decode('deadbeef', 16) == 3735928559
         assert decode('f007ba11', 16) == 4027038225
+        assert decode('.a', 16) == .625
+        assert decode('f.345', 16) == 15.20435
+        assert decode('9.9', 16) == 9.5625
+        assert decode('.ff', 16) == .99609
 
     def test_decode_10(self):
         assert decode('10', 2) == 2
@@ -62,6 +76,16 @@ class BasesDecodeTest(unittest.TestCase):
         assert decode('10', 32) == 32
         assert decode('10', 36) == 36
 
+    def test_decode_radix10(self):
+        assert decode('.10', 2) == 0.5
+        assert decode('.10', 4) == 0.25
+        assert decode('.10', 8) == 0.125
+        assert decode('.10', 10) == .10
+        assert decode('.10', 16) == .0625
+        assert decode('.10', 25) == 0.04
+        assert decode('.10', 32) == 0.03125
+        assert decode('.10', 36) == 0.02778
+
     def test_decode_1010(self):
         assert decode('1010', 2) == 10
         assert decode('1010', 4) == 68
@@ -72,6 +96,16 @@ class BasesDecodeTest(unittest.TestCase):
         assert decode('1010', 32) == 32800
         assert decode('1010', 36) == 46692
 
+    def test_decode_radix1010(self):
+        assert decode('.1010', 2) == .625
+        assert decode('.1010', 4) == 0.26562
+        assert decode('.1010', 8) == 0.12695
+        assert decode('.1010', 10) == 0.101
+        assert decode('.1010', 16) == 0.06274
+        assert decode('.1010', 25) == 0.04006
+        assert decode('.1010', 32) == 0.03128
+        assert decode('.1010', 36) == 0.0278
+
     def test_decode_101101(self):
         assert decode('101101', 2) == 45
         assert decode('101101', 4) == 1105
@@ -81,6 +115,16 @@ class BasesDecodeTest(unittest.TestCase):
         assert decode('101101', 25) == 9781876
         assert decode('101101', 32) == 33588225
         assert decode('101101', 36) == 60514129
+
+    def test_decode_101radix101(self):
+        assert decode('101.101', 2) == 5.625
+        assert decode('101.101', 4) == 17.26562
+        assert decode('101.101', 8) == 65.12695
+        assert decode('101.101', 10) == 101.101
+        assert decode('101.101', 16) == 257.06274
+        assert decode('101.101', 25) == 626.04006
+        assert decode('101.101', 32) == 1025.03128
+        assert decode('101.101', 36) == 1297.0278
 
 
 class BasesEncodeTest(unittest.TestCase):
@@ -103,6 +147,21 @@ class BasesEncodeTest(unittest.TestCase):
         assert encode(14, 2) == '1110'
         assert encode(15, 2) == '1111'
 
+        assert encode(.1, 2) == '0.00011'
+        assert encode(.2, 2) == '0.00110'
+        assert encode(.3, 2) == '0.01001'
+        assert encode(.4, 2) == '0.01100'
+        assert encode(.5, 2) == '0.1'
+        assert encode(.6, 2) == '0.10011'
+        assert encode(.7, 2) == '0.10110'
+        assert encode(.8, 2) == '0.11001'
+        assert encode(.9, 2) == '0.11100'
+        assert encode(.11, 2) == '0.00011'
+        assert encode(.12, 2) == '0.00011'
+        assert encode(.13, 2) == '0.00100'
+        assert encode(.14, 2) == '0.00100'
+        assert encode(.15, 2) == '0.00100'
+
     def test_encode_decimal(self):
         # assert encode(0, 10) == '0'  # Should '' be valid?
         assert encode(5, 10) == '5'
@@ -116,6 +175,18 @@ class BasesEncodeTest(unittest.TestCase):
         assert encode(6789, 10) == '6789'
         assert encode(13579, 10) == '13579'
         assert encode(24680, 10) == '24680'
+
+        assert encode(.5, 10) == '0.5'
+        assert encode(1.0, 10) == '1'
+        assert encode(.25, 10) == '0.25'
+        assert encode(6.4, 10) == '6.4'
+        assert encode(.99, 10) == '0.99'
+        assert encode(1.23, 10) == '1.23'
+        assert encode(78.9, 10) == '78.9'
+        assert encode(23.45, 10) == '23.45'
+        assert encode(678.9, 10) == '678.9'
+        assert encode(1.3579, 10) == '1.3579'
+        assert encode(24.680, 10) == '24.68'
 
     def test_encode_hexadecimal(self):
         assert encode(10, 16) == 'a'
@@ -131,6 +202,18 @@ class BasesEncodeTest(unittest.TestCase):
         assert encode(3735928559, 16) == 'deadbeef'
         assert encode(4027038225, 16) == 'f007ba11'
 
+        assert encode(1.5, 16) == '1.8'
+        assert encode(15.3, 16) == 'f.4cccc'
+        assert encode(2.55, 16) == '2.8cccc'
+        assert encode(27.66, 16) == '1b.a8f5c'
+        assert encode(324.3, 16) == '144.4cccc'
+        assert encode(4881.3, 16) == '1311.4cccc'
+        assert encode(64.206, 16) == '40.34bc6'
+        assert encode(12.648430, 16) == 'c.a5ff8'
+        assert encode(16435.934, 16) == '4033.ef1a9'
+        assert encode(3735928.559, 16) == '390178.8f1a9'
+        assert encode(402703.8225, 16) == '6250f.d28f5'
+
     def test_encode_1234(self):
         assert encode(1234, 2) == '10011010010'
         assert encode(1234, 3) == '1200201'
@@ -140,6 +223,16 @@ class BasesEncodeTest(unittest.TestCase):
         assert encode(1234, 10) == '1234'
         assert encode(1234, 16) == '4d2'
         assert encode(1234, 32) == '16i'
+        
+    def test_encode_123radix4(self):
+        assert encode(123.4, 2) == '1111011.01100'
+        assert encode(123.4, 3) == '11120.10121'
+        assert encode(123.4, 4) == '1323.12121'
+        # assert encode(123.4, 5) == '443.2'
+        assert encode(123.4, 8) == '173.31463'
+        assert encode(123.4, 10) == '123.4'
+        assert encode(123.4, 16) == '7b.66666'
+        assert encode(123.4, 32) == '3r.cpj6c'
 
     def test_encode_248975(self):
         assert encode(248975, 2) == '111100110010001111'
