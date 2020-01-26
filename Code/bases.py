@@ -35,7 +35,11 @@ def decode(digits, base):
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
 
     sum = 0
-    whole, fraction = digits.split(".", 1)
+    if "." in digits:
+        whole, fraction = digits.split(".", 1)
+    else:
+        whole = digits
+        fraction = "0"
     for pos, digit in enumerate(whole[::-1]):
         number = numberOf(digit)
         number *= (base ** pos)
@@ -56,18 +60,12 @@ def encode(number, base):
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
     # Handle unsigned numbers only for now
     assert number >= 0, 'number is negative: {}'.format(number)
-    # PSEUDO:
-    #   while number left > 0
-    #       while position value * base < number left
-    #           increase position, posval
-    #       digit gets numleft / posval, truncated
-    #       numleft becomes remainder of above
-    #   fill in 0s for remaining positions
+
     numLeft = number
     oldPos = 1
     posVal = 1
     result = ''
-    while numLeft > 0:
+    while numLeft >= 1:
         newPos = 1
         while posVal * base <= numLeft:
             posVal *= base
@@ -81,6 +79,19 @@ def encode(number, base):
         oldPos = newPos
     for _ in range(1, oldPos):
         result += "0"
+
+    if result == "":
+        result = "0"
+
+    result += "."
+
+    digits = 0
+    while numLeft > 0 and digits <= 5:
+        whole = int(numLeft * base)
+        result += numberTo(whole, base)
+        numLeft -= whole
+        digits += 1
+
     return result
 
 def convert(digits, base1, base2):
@@ -111,5 +122,4 @@ def main():
         print('Converts digits from base1 to base2')
 
 if __name__ == '__main__':
-    # main()
-    print(decodeWithRadix("1101.101", 2))
+    main()
