@@ -16,7 +16,7 @@ def factorial_iterative(n):
     answer = n
     if n == 0:
         answer = 1
-    for number in range(n)[::-1]:
+    for number in range(n):
         if number > 1:
             answer *= number
     return answer
