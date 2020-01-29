@@ -50,11 +50,11 @@ def permutations(n, arr):
                 all_perms.append(narr)
             arr = list(arr) 
             if n % 2 == 0:
-                # swap elements i and n-1
-                arr[i], arr[n-1] = arr[n-1], arr[i]
-            else: 
                 # swap elements 0 and n-1
                 arr[0], arr[n-1] = arr[n-1], arr[0]
+            else: 
+                # swap elements i and n-1
+                arr[i], arr[n-1] = arr[n-1], arr[i]
             if string:
                 arr = "".join(arr)
     return all_perms
