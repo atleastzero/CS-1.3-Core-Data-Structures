@@ -31,21 +31,19 @@ def factorial_recursive(n):
         # call function recursively
         return n * factorial_recursive(n - 1)
 
-def permutations(n, arr):
+def permutations(arr, n=-1):
     all_perms = []
     string = False
+    if n < 1:
+        n = len(arr)
     if isinstance(arr, str):
         string = True
     print(n, arr)
     if n == 1:
         all_perms.append(arr)
     else:
-        # new_additions = permutations(n-1, arr)
-        # for narr in new_additions:
-        #     all_perms.append(narr)
-
         for i in range(n):
-            new_additions = permutations(n-1, arr)
+            new_additions = permutations(arr, n-1)
             for narr in new_additions:
                 all_perms.append(narr)
             arr = list(arr) 
@@ -59,6 +57,17 @@ def permutations(n, arr):
                 arr = "".join(arr)
     return all_perms
 
+def combinations(n, arr):
+    all_combs = []
+    if n == 1:
+        for val in arr:
+            all_combs.append(val)
+    else:
+        for i, val in enumerate(arr):
+            for j in combinations(n-1, arr[i+1:]):
+                all_combs.append("" + val + j)
+    return all_combs
+
 def main():
     import sys
     args = sys.argv[1:]  # Ignore script file name
@@ -69,7 +78,7 @@ def main():
     else:
         print('Usage: {} number'.format(sys.argv[0]))
 
-
 if __name__ == '__main__':
     # main()
-    print(permutations(3, "123"))
+    # print(permutations("123"))
+    print(combinations(3, "1234"))
