@@ -16,7 +16,6 @@ def contains(text, pattern):
     """Return a boolean indicating whether pattern occurs in text."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
-    # TODO: Implement contains here (iteratively and/or recursively)
     if len(pattern) == 0:
         return True
     i = find_next_possible_start(text, pattern, 0)
@@ -32,20 +31,8 @@ def find_index(text, pattern):
     or None if not found."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
-    # TODO: Implement find_index here (iteratively and/or recursively)
     if len(pattern) == 0:
         return 0
-    # i = find_next_possible_start(text, pattern, 0)
-    # while i is not None and i < len(text):
-    #     j = 0
-    #     matching = True
-    #     while j < len(pattern) and matching:
-    #         if text[i + j] != pattern[j]:
-    #             matching = False
-    #         j += 1
-    #     if matching:
-    #         return i
-    #     i = find_next_possible_start(text, pattern, i+1)
     i = find_next_possible_start(text, pattern, 0)
     while i is not None:
         if is_match(text, pattern, i):
@@ -102,3 +89,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    print(find_index("if there's a will, there's a way", "there's a way"))
