@@ -5,7 +5,19 @@ def contains(text, pattern):
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement contains here (iteratively and/or recursively)
-
+    if len(pattern) == 0:
+        return True
+    for i in range(len(text) - len(pattern) + 1):
+        if text[i] == pattern[0]:
+            j = 0
+            matching = True
+            while j < len(pattern) and matching:
+                if text[i + j] != pattern[j]:
+                    matching = False
+                j += 1
+            if matching:
+                return True
+    return False
 
 def find_index(text, pattern):
     """Return the starting index of the first occurrence of pattern in text,
@@ -13,15 +25,45 @@ def find_index(text, pattern):
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement find_index here (iteratively and/or recursively)
-
+    if len(pattern) == 0:
+        return 0
+    for i in range(len(text) - len(pattern) + 1):
+        if text[i] == pattern[0]:
+            j = 0
+            matching = True
+            while j < len(pattern) and matching:
+                if text[i + j] != pattern[j]:
+                    matching = False
+                j += 1
+            if matching:
+                return i
 
 def find_all_indexes(text, pattern):
     """Return a list of starting indexes of all occurrences of pattern in text,
     or an empty list if not found."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
-    # TODO: Implement find_all_indexes here (iteratively and/or recursively)
+    possible_starts = []
+    actual_starts = []
 
+    if len(pattern) == 0:
+        for i in range(len(text)):
+            actual_starts.append(i)
+    else:
+        for i in range(len(text) - len(pattern) + 1):
+            if text[i] == pattern[0]:
+                possible_starts.append(i)
+        
+        for i in possible_starts:
+            j = 0
+            matching = True
+            while j < len(pattern) and matching:
+                if text[i + j] != pattern[j]:
+                    matching = False
+                j += 1
+            if matching:
+                actual_starts.append(i)
+    return actual_starts
 
 def test_string_algorithms(text, pattern):
     found = contains(text, pattern)
