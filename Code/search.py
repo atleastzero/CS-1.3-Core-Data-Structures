@@ -9,6 +9,7 @@ def linear_search(array, item):
 
 
 def linear_search_iterative(array, item):
+    '''TODO: Time complexity: O(n)'''
     # loop over all array values until item is found
     for index, value in enumerate(array):
         if item == value:
@@ -17,6 +18,7 @@ def linear_search_iterative(array, item):
 
 
 def linear_search_recursive(array, item, index=0):
+    '''TODO: Time complexity: O(n)'''
     if index >= len(array):
         return None
     if array[index] == item:
@@ -32,6 +34,7 @@ def binary_search(array, item):
 
 
 def binary_search_iterative(array, item):
+    '''TODO: Time complexity: O(log(2)n)'''
     searching = True
     index = int(len(array) / 2)
     left = 0
@@ -49,6 +52,7 @@ def binary_search_iterative(array, item):
             index = int((left + right) / 2)
 
 def binary_search_recursive(array, item, left=None, right=None):
+    '''TODO: Time complexity: O(log(2)n)'''
     if left is None:
         left = 0
     if right is None:
