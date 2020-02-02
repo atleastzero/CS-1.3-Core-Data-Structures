@@ -6,6 +6,12 @@ def find_next_possible_start(text, pattern, index):
             return i
     return None
 
+def is_match(text, pattern, index):
+    for j in range(len(pattern)):
+        if text[index + j] != pattern[j]:
+            return False
+    return True
+
 def contains(text, pattern):
     """Return a boolean indicating whether pattern occurs in text."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
@@ -14,14 +20,8 @@ def contains(text, pattern):
     if len(pattern) == 0:
         return True
     i = find_next_possible_start(text, pattern, 0)
-    while i is not None and i < len(text):
-        j = 0
-        matching = True
-        while j < len(pattern) and matching:
-            if text[i + j] != pattern[j]:
-                matching = False
-            j += 1
-        if matching:
+    while i is not None:
+        if is_match(text, pattern, i):
             return True
         i = find_next_possible_start(text, pattern, i+1)
     
@@ -35,15 +35,20 @@ def find_index(text, pattern):
     # TODO: Implement find_index here (iteratively and/or recursively)
     if len(pattern) == 0:
         return 0
+    # i = find_next_possible_start(text, pattern, 0)
+    # while i is not None and i < len(text):
+    #     j = 0
+    #     matching = True
+    #     while j < len(pattern) and matching:
+    #         if text[i + j] != pattern[j]:
+    #             matching = False
+    #         j += 1
+    #     if matching:
+    #         return i
+    #     i = find_next_possible_start(text, pattern, i+1)
     i = find_next_possible_start(text, pattern, 0)
-    while i is not None and i < len(text):
-        j = 0
-        matching = True
-        while j < len(pattern) and matching:
-            if text[i + j] != pattern[j]:
-                matching = False
-            j += 1
-        if matching:
+    while i is not None:
+        if is_match(text, pattern, i):
             return i
         i = find_next_possible_start(text, pattern, i+1)
 
@@ -52,28 +57,19 @@ def find_all_indexes(text, pattern):
     or an empty list if not found."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
-    possible_starts = []
-    actual_starts = []
+
+    starts = []
 
     if len(pattern) == 0:
         for i in range(len(text)):
-            actual_starts.append(i)
+            starts.append(i)
     else:
         i = find_next_possible_start(text, pattern, 0)
         while i is not None:
-            possible_starts.append(i)
+            if is_match(text, pattern, i):
+                starts.append(i)
             i = find_next_possible_start(text, pattern, i+1)
-        
-        for i in possible_starts:
-            j = 0
-            matching = True
-            while j < len(pattern) and matching:
-                if text[i + j] != pattern[j]:
-                    matching = False
-                j += 1
-            if matching:
-                actual_starts.append(i)
-    return actual_starts
+    return starts
 
 def test_string_algorithms(text, pattern):
     found = contains(text, pattern)
