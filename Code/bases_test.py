@@ -147,6 +147,7 @@ class BasesEncodeTest(unittest.TestCase):
         assert encode(14, 2) == '1110'
         assert encode(15, 2) == '1111'
 
+    def test_encode_binary_wradix(self):
         assert encode(.1, 2) == '0.00011'
         assert encode(.2, 2) == '0.00110'
         assert encode(.3, 2) == '0.01001'
@@ -176,6 +177,7 @@ class BasesEncodeTest(unittest.TestCase):
         assert encode(13579, 10) == '13579'
         assert encode(24680, 10) == '24680'
 
+    def test_encode_decimal_wradix(self):
         assert encode(.5, 10) == '0.5'
         assert encode(1.0, 10) == '1'
         assert encode(.25, 10) == '0.25'
@@ -202,6 +204,7 @@ class BasesEncodeTest(unittest.TestCase):
         assert encode(3735928559, 16) == 'deadbeef'
         assert encode(4027038225, 16) == 'f007ba11'
 
+    def test_encode_hexadecimal_wradix(self):
         assert encode(1.5, 16) == '1.8'
         assert encode(15.3, 16) == 'f.4cccc'
         assert encode(2.55, 16) == '2.8cccc'
