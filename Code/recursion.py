@@ -31,6 +31,8 @@ def factorial_recursive(n):
         # call function recursively
         return n * factorial_recursive(n - 1)
 
+permutation_lookup_table = {}
+
 def permutations(arr, n=-1):
     all_perms = []
     string = False
@@ -38,12 +40,14 @@ def permutations(arr, n=-1):
         n = len(arr)
     if isinstance(arr, str):
         string = True
-    print(n, arr)
     if n == 1:
         all_perms.append(arr)
     else:
         for i in range(n):
-            new_additions = permutations(arr, n-1)
+            if (arr, n-1) in permutation_lookup_table:
+                new_additions = permutation_lookup_table[(arr, n-1)]
+            else:
+                new_additions = permutations(arr, n-1)
             for narr in new_additions:
                 all_perms.append(narr)
             arr = list(arr) 
@@ -55,7 +59,11 @@ def permutations(arr, n=-1):
                 arr[i], arr[n-1] = arr[n-1], arr[i]
             if string:
                 arr = "".join(arr)
+
+    permutation_lookup_table[(arr, n)] = all_perms
     return all_perms
+
+combonation_lookup_table = {}
 
 def combinations(n, arr):
     all_combs = []
@@ -80,5 +88,5 @@ def main():
 
 if __name__ == '__main__':
     # main()
-    # print(permutations("123"))
-    print(combinations(3, "1234"))
+    print(permutations("1234"))
+    # print(combinations(3, "1234"))
