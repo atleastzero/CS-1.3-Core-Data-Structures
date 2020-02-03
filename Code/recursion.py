@@ -63,17 +63,24 @@ def permutations(arr, n=-1):
     permutation_lookup_table[(arr, n)] = all_perms
     return all_perms
 
-combonation_lookup_table = {}
+combination_lookup_table = {}
 
 def combinations(n, arr):
+    if (n, arr) in combination_lookup_table:
+        return combination_lookup_table[(n, arr)]
     all_combs = []
     if n == 1:
         for val in arr:
             all_combs.append(val)
     else:
         for i, val in enumerate(arr):
-            for j in combinations(n-1, arr[i+1:]):
+            if (n-1, arr[i+1:]) in combination_lookup_table:
+                new_combs = combination_lookup_table[(n-1, arr[i+1])]
+            else:
+                new_combs = combinations(n-1, arr[i+1:])
+            for j in new_combs:
                 all_combs.append("" + val + j)
+    combination_lookup_table[(arr, n)] = all_combs
     return all_combs
 
 def main():
@@ -88,5 +95,5 @@ def main():
 
 if __name__ == '__main__':
     # main()
-    print(permutations("1234"))
-    # print(combinations(3, "1234"))
+    # print(permutations("1234"))
+    print(combinations(3, "1234"))
