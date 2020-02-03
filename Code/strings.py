@@ -58,6 +58,28 @@ def find_all_indexes(text, pattern):
             i = find_next_possible_start(text, pattern, i+1)
     return starts
 
+def is_anagram(word1, word2):
+    if len(word1) == 1 and word1 == word2:
+        return True
+    for letter in word1:
+        try:
+            two_index = word2.index(letter)
+            return is_anagram(word1[1:], word2[: two_index] + word2 [two_index+1:])
+        except:
+            return False
+
+def anagrams(text):
+    f = open("/usr/share/dict/words", "r")
+    contents = f.read()
+    words_list = contents.split("\n")
+    f.close()
+    anagram_list = []
+    for word in words_list:
+        if len(text) == len(word) and text != word:
+            if is_anagram(text, word):
+                anagram_list.append(word)
+    return anagram_list
+
 def test_string_algorithms(text, pattern):
     found = contains(text, pattern)
     print('contains({!r}, {!r}) => {}'.format(text, pattern, found))
@@ -67,7 +89,6 @@ def test_string_algorithms(text, pattern):
     # TODO: Uncomment these lines after you implement find_all_indexes
     indexes = find_all_indexes(text, pattern)
     print('find_all_indexes({!r}, {!r}) => {}'.format(text, pattern, indexes))
-
 
 def main():
     """Read command-line arguments and test string searching algorithms."""
@@ -89,4 +110,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    print(find_index("if there's a will, there's a way", "there's a way"))
