@@ -1,10 +1,10 @@
 #!python
 
-from recursion import factorial
+from recursion import factorial, permutations, combinations
 import unittest
 
 
-class RecursionTest(unittest.TestCase):
+class FactorialTest(unittest.TestCase):
     def test_factorial_with_small_integers(self):
         # factorial should return the product n*(n-1)*...*2*1 for n >= 0
         assert factorial(0) == 1  # base case
@@ -37,6 +37,20 @@ class RecursionTest(unittest.TestCase):
             factorial(2.0)
             factorial(3.14159)
 
-
+class PermutationTest(unittest.TestCase):
+    def test_permutation(self):
+        assert permutations("0") == ["0"]
+        assert permutations("1") == ["1"]
+        assert permutations("2") == ["2"]
+        assert permutations("3") == ["3"]
+        assert permutations("12") == ["12", "21"]
+        assert permutations("23") == ["23", "32"]
+        three = permutations("123")
+        three.sort()
+        assert three == ["123", "132", "213", "231", "312", "321"]
+        four = permutations("1234")
+        four.sort()
+        assert four == ['1234', '1234', '1324', '1324', '2134', '2134', '2314', '2314', '2341', '2341', '2431', '2431', '3124', '3124', '3214', '3214', '3241', '3241', '3421', '3421', '4231', '4231', '4321', '4321']
+        
 if __name__ == '__main__':
     unittest.main()

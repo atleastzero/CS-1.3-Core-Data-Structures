@@ -94,6 +94,5 @@ def main():
         print('Usage: {} number'.format(sys.argv[0]))
 
 if __name__ == '__main__':
-    # main()
-    # print(permutations("1234"))
-    print(combinations(3, "1234"))
+    main()
+
