@@ -35,7 +35,7 @@ class StringsTest(unittest.TestCase):
         assert contains('hyped', 'yped') is True  
         assert contains('hyped', 'hyped') is True  
         assert contains('yooooooo', 'o') is True  
-        assert contains('yooooooo', 'ooooo') is True  # overlapping pattern
+        assert contains('yooooooo', 'ooooo') is True 
 
     def test_contains_with_non_matching_patterns(self):
         # Negative test cases (counterexamples) with non-matching patterns
