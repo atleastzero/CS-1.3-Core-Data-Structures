@@ -31,7 +31,8 @@ class LinkedStack(object):
 
     def push(self, item):
         """Insert the given item on the top of this stack.
-        Running time: O(???) – Why? [TODO]"""
+        Running time: O(1) – it takes constant time to append to a linked list
+        with a tail pointer"""
         self.list.append(item)
 
     def peek(self):
@@ -44,7 +45,8 @@ class LinkedStack(object):
     def pop(self):
         """Remove and return the item on the top of this stack,
         or raise ValueError if this stack is empty.
-        Running time: O(???) – Why? [TODO]"""
+        Running time: O(n) - the way that linked list is set up, to delete a 
+        tail node, the list must be traversed. This could be changed, however"""
         if self.is_empty():
             raise ValueError
         else:
@@ -81,7 +83,7 @@ class ArrayStack(object):
 
     def push(self, item):
         """Insert the given item on the top of this stack.
-        Running time: O(???) – Why? [TODO]"""
+        Running time: O(1) – it takes constant time to append to an array"""
         self.list.append(item)
         self.top += 1
 
@@ -95,7 +97,8 @@ class ArrayStack(object):
     def pop(self):
         """Remove and return the item on the top of this stack,
         or raise ValueError if this stack is empty.
-        Running time: O(???) – Why? [TODO]"""
+        Running time: O(1) – because nothing gets moved or traversed, this takes
+        constant time"""
         if self.is_empty():
             raise ValueError
         else:
