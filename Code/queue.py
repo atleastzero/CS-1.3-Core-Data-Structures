@@ -31,7 +31,8 @@ class LinkedQueue(object):
 
     def enqueue(self, item):
         """Insert the given item at the back of this queue.
-        Running time: O(???) – Why? [TODO]"""
+        Running time: O(1) – because it takes constant time to append to a 
+        linked list with a tail pointer"""
         self.list.append(item)
 
     def front(self):
@@ -44,7 +45,8 @@ class LinkedQueue(object):
     def dequeue(self):
         """Remove and return the item at the front of this queue,
         or raise ValueError if this queue is empty.
-        Running time: O(???) – Why? [TODO]"""
+        Running time: O(1) – because it takes constant time to delete from the
+        front of a linked list"""
         if self.is_empty():
             raise ValueError
         else:
@@ -81,7 +83,8 @@ class ArrayQueue(object):
 
     def enqueue(self, item):
         """Insert the given item at the back of this queue.
-        Running time: O(???) – Why? [TODO]"""
+        Running time: O(n) - because each item in an array must be individually 
+        shifted when prepending"""
         self.list.insert(0, item)
         self.start += 1
 
@@ -95,7 +98,8 @@ class ArrayQueue(object):
     def dequeue(self):
         """Remove and return the item at the front of this queue,
         or raise ValueError if this queue is empty.
-        Running time: O(???) – Why? [TODO]"""
+        Running time: O(1) – because nothing gets moved or traversed, this takes
+        constant time"""
         if self.is_empty():
             raise ValueError
         else:
