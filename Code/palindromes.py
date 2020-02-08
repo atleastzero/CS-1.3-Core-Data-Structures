@@ -18,6 +18,8 @@ def is_palindrome(text):
 
 
 def is_palindrome_iterative(text):
+    """Best and worst case running time: O(n) because must be traversed to at 
+    least halfway through the list"""
     front = 0
     back = len(text) - 1
     while front < back:
@@ -32,6 +34,8 @@ def is_palindrome_iterative(text):
     return True
 
 def is_palindrome_recursive(text):
+    """Best and worst case running time: O(n) because must be traversed to at 
+    least halfway through the list"""
     if len(text) <= 1:
         return True
     

@@ -13,7 +13,11 @@ def is_match(text, pattern, index):
     return True
 
 def contains(text, pattern):
-    """Return a boolean indicating whether pattern occurs in text."""
+    """Return a boolean indicating whether pattern occurs in text.
+    Best case running time: O(p) because must be traversed to at 
+    least pattern length
+    Worst case running time: O(t*p) because in case of all fake starts with no
+    or last match, must traverse pattern length for each letter in t"""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     if len(pattern) == 0:
@@ -28,7 +32,11 @@ def contains(text, pattern):
 
 def find_index(text, pattern):
     """Return the starting index of the first occurrence of pattern in text,
-    or None if not found."""
+    or None if not found.
+    Best case running time: O(p) because must be traversed to at 
+    least pattern length
+    Worst case running time: O(t*p) because in case of all fake starts with no
+    or last match, must traverse pattern length for each letter in t"""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     if len(pattern) == 0:
@@ -41,7 +49,9 @@ def find_index(text, pattern):
 
 def find_all_indexes(text, pattern):
     """Return a list of starting indexes of all occurrences of pattern in text,
-    or an empty list if not found."""
+    or an empty list if not found.
+    Best case and worst case running time: O((t-p)*p) because must traverse t-p 
+    for all possible starts and each p times"""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
 
