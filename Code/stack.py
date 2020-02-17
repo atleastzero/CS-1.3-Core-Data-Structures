@@ -33,14 +33,14 @@ class LinkedStack(object):
         """Insert the given item on the top of this stack.
         Running time: O(1) – it takes constant time to append to a linked list
         with a tail pointer"""
-        self.list.append(item)
+        self.list.prepend(item)
 
     def peek(self):
         """Return the item on the top of this stack without removing it,
         or None if this stack is empty."""
         if self.is_empty():
             return None
-        return self.list.tail.data
+        return self.list.head.data
 
     def pop(self):
         """Remove and return the item on the top of this stack,
@@ -50,7 +50,7 @@ class LinkedStack(object):
         if self.is_empty():
             raise ValueError
         else:
-            top = self.list.tail.data
+            top = self.list.head.data
             self.list.delete(top)
             return top
 
