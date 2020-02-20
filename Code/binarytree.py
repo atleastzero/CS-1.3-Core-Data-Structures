@@ -29,9 +29,9 @@ class BinaryTreeNode(object):
         downward path from this node to a descendant leaf node).
         TODO: Best and worst case running time: ??? under what conditions?"""
         if self.is_leaf():
-            return 1
-        left_height = 1
-        right_height = 1
+            return 0
+        left_height = 0
+        right_height = 0
         # Checks if left child has a value and if so calculate its height
         if self.left:
             left_height = self.left.height() + 1
@@ -104,7 +104,7 @@ class BinarySearchTree(object):
         parent = self._find_parent_node_recursive(item, self.root)
         added = False
         # TODO: Check if the given item should be inserted left of parent node
-        if self.root.data > item:
+        if parent.data > item:
             # TODO: Create a new node and set the parent's left child
             parent.left = BinaryTreeNode(item)
             added = True
@@ -205,7 +205,7 @@ class BinarySearchTree(object):
             # Return the parent of the found node
             return parent
         # TODO: Check if the given item is less than the node's data
-        elif node.data < item:
+        elif node.data > item:
             # TODO: Recursively descend to the node's left child, if it exists
             if node.left:
                 return self._find_parent_node_recursive(item, node.left, node)  
@@ -242,9 +242,11 @@ class BinarySearchTree(object):
         TODO: Running time: ??? Why and under what conditions?
         TODO: Memory usage: ??? Why and under what conditions?"""
         if node:
-            visit.append(self._traverse_in_order_recursive(node.left, visit))
+            if node.left:
+                self._traverse_in_order_recursive(node.left, visit)
             visit.append(node.data)
-            visit.append(self._traverse_in_order_recursive(node.left, visit))
+            if node.right:
+                self._traverse_in_order_recursive(node.right, visit)
 
     def _traverse_in_order_iterative(self, node, visit):
         """Traverse this binary tree with iterative in-order traversal (DFS).
@@ -269,8 +271,10 @@ class BinarySearchTree(object):
         TODO: Memory usage: ??? Why and under what conditions?"""
         if node:
             visit.append(node.data)
-            visit.append(self._traverse_in_order_recursive(node.left, visit))
-            visit.append(self._traverse_in_order_recursive(node.left, visit))
+            if node.left:
+                self._traverse_pre_order_recursive(node.left, visit)
+            if node.right:
+                self._traverse_pre_order_recursive(node.right, visit)
 
     def _traverse_pre_order_iterative(self, node, visit):
         """Traverse this binary tree with iterative pre-order traversal (DFS).
@@ -294,9 +298,11 @@ class BinarySearchTree(object):
         TODO: Running time: ??? Why and under what conditions?
         TODO: Memory usage: ??? Why and under what conditions?"""
         if node:
+            if node.left:
+                self._traverse_post_order_recursive(node.left, visit)
+            if node.right:  
+                self._traverse_post_order_recursive(node.right, visit)
             visit.append(node.data)
-            visit.append(self._traverse_in_order_recursive(node.left, visit))
-            visit.append(self._traverse_in_order_recursive(node.left, visit))
 
     def _traverse_post_order_iterative(self, node, visit):
         """Traverse this binary tree with iterative post-order traversal (DFS).
@@ -340,8 +346,8 @@ class BinarySearchTree(object):
 
 def test_binary_search_tree():
     # Create a complete binary search tree of 3, 7, or 15 items in level-order
-    # items = [2, 1, 3]
-    items = [4, 2, 6, 1, 3, 5, 7]
+    items = [2, 1, 3]
+    # items = [4, 2, 6, 1, 3, 5, 7]
     # items = [8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15]
     print('items: {}'.format(items))
 
@@ -354,6 +360,8 @@ def test_binary_search_tree():
         tree.insert(item)
         print('insert({}), size: {}'.format(item, tree.size))
     print('root: {}'.format(tree.root))
+    print('root.left: {}'.format(tree.root.left))
+    print('root.right: {}'.format(tree.root.right))
 
     print('\nSearching for items:')
     for item in items:
